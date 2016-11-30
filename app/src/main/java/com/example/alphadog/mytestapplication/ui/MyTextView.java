@@ -1,4 +1,4 @@
-package com.example.alphadog.mytestapplication.view;
+package com.example.alphadog.mytestapplication.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -66,7 +66,6 @@ public class MyTextView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         setMeasuredDimension(measuredDimension(widthMeasureSpec, 0), measuredDimension(heightMeasureSpec, 1));
     }
 
@@ -111,9 +110,9 @@ public class MyTextView extends View {
             result = specSize;
         } else {
             if (type == 0) {
-                result = getPaddingLeft() + getPaddingRight() + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, mContext.getResources().getDisplayMetrics());
+                result = getPaddingLeft() + getPaddingRight() + (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, mContext.getResources().getDisplayMetrics());
             } else {
-                result = getPaddingTop() + getPaddingBottom() + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, mContext.getResources().getDisplayMetrics());
+                result = getPaddingTop() + getPaddingBottom() + (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, mContext.getResources().getDisplayMetrics());
             }
         }
 

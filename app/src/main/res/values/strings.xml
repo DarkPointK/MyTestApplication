@@ -2,5 +2,6 @@
     <string name="app_name">My Test Application</string>
     <string name="action_settings">Settings</string>
     <string name="my_textview">自定义TextView</string>
+    <string name="my_anim">自定义小球动画</string>
     <string name="ok">确  定</string>
 </resources>

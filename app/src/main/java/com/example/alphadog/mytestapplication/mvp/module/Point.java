@@ -1,4 +1,4 @@
-package com.example.alphadog.mytestapplication.module;
+package com.example.alphadog.mytestapplication.mvp.module;
 
 /**
  * Created by Alpha Dog on 2016/10/10.

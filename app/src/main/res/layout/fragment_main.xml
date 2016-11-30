@@ -5,7 +5,7 @@
                 tools:context=".fragment.MainActivityFragment"
                 tools:showIn="@layout/activity_main">
 
-    <com.example.alphadog.mytestapplication.view.MyAnimView
+    <com.example.alphadog.mytestapplication.ui.MyAnimView
         android:id="@+id/MyAnimView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

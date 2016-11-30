@@ -2,7 +2,7 @@ package com.example.alphadog.mytestapplication.evaluator;
 
 import android.animation.TypeEvaluator;
 
-import com.example.alphadog.mytestapplication.module.Point;
+import com.example.alphadog.mytestapplication.mvp.module.Point;
 
 /**
  * Created by Alpha Dog on 2016/10/10.

@@ -1,15 +1,17 @@
 package com.example.alphadog.mytestapplication.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.alphadog.mytestapplication.R;
-import com.example.alphadog.mytestapplication.view.MyTextView;
+import com.example.alphadog.mytestapplication.ui.MyTextView;
 
 /**
  * Created by Alpha Dog on 2016/11/8.
@@ -50,6 +52,11 @@ public class MyTextViewFragment extends Fragment {
                     turnRun = true;
                     maxProgress = Integer.valueOf(inputEt.getText().toString());
                     progress=0;
+                    InputMethodManager imm =  (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if(imm != null) {
+                        imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(),
+                                0);
+                    }
                     initView();
                     thread.start();
                 }

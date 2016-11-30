@@ -21,12 +21,12 @@
         android:text="@string/ok"
         android:layout_gravity="center_horizontal"/>
 
-    <com.example.alphadog.mytestapplication.view.MyTextView
+    <com.example.alphadog.mytestapplication.ui.MyTextView
         android:id="@+id/my_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:text=""
-        app:backgroudColor="#868686"
-        app:textColor="#000"
+        app:backgroudColor="#f72c7a"
+        app:textColor="#fff"
         app:textSize="100sp"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.alphadog.mytestapplication.fragment;
+package com.example.alphadog.mytestapplication.mvp.view.fragment;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -27,4 +27,5 @@ public class MainActivityFragment extends Fragment {
         super.onDestroyView();
         Log.d("MainActivityFragment", "onDestroyView");
     }
+
 }

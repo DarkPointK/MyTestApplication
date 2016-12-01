@@ -14,7 +14,4 @@ import dagger.Component;
 public interface MyAnimViewFramgComponent {
     void inject(MainActivity activity);
     void inject(MyAnimView view);
-
-//    将下面方法通过接口暴露出去，依赖此Component的组件得以使用此方法
-//    Point getPoint();
 }

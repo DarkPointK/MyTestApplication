@@ -1,4 +1,4 @@
-package com.example.alphadog.mytestapplication.fragment;
+package com.example.alphadog.mytestapplication.mvp.view.fragment;
 
 import android.app.Fragment;
 import android.content.Context;

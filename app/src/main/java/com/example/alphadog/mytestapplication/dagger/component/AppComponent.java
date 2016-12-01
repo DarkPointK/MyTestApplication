@@ -14,5 +14,6 @@ import dagger.Component;
 @Singleton
 @Component(modules = AppMod.class)
 public interface AppComponent {
+    //    将下面方法通过接口暴露出去，依赖此Component的组件得以使用此方法
     Point getPoint();
 }

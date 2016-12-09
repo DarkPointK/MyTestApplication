@@ -14,10 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.alphadog.mytestapplication.R;
 import com.example.alphadog.mytestapplication.mvp.persenters.MainPersenters;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.MyTextViewFragment;
+import com.example.alphadog.mytestapplication.mvp.view.fragment.RecycleFragment;
 
 public class MainActivity extends BaseActivity {
     private FloatingActionButton fab;
@@ -31,14 +33,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        strTags = new String[]{"MyTextViewFragment", "MainActivityFragment"};
+        strTags = getResources().getStringArray(R.array.options_item);
 
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mNavigationView = (NavigationView) findViewById(R.id.nv);
-        mPersenters = new MainPersenters();
+        mPersenters = new MainPersenters(this);
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -62,13 +64,7 @@ public class MainActivity extends BaseActivity {
 
         mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         initListener();
     }
 
@@ -85,16 +81,21 @@ public class MainActivity extends BaseActivity {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         switch (id) {
-            case R.id.my_textview:
-                if (mPersenters.showNewFragment(getFragmentManager(), strTags[0])) {
-                    mPersenters.addTag(strTags[0]);
-                    transaction.add(R.id.fragment, new MyTextViewFragment(), strTags[0]).commit();
+            case R.id.recycle:
+                Toast.makeText(this, "正在开发，敬请期待", Toast.LENGTH_SHORT).show();
+                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
+                    mPersenters.addTag(strTags[2]);
+                    transaction.add(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
                 }
-//            transaction.addToBackStack(null);
+                break;
+            case R.id.my_textview:
+                if (mPersenters.showNewFragment(getFragmentManager(), strTags[1])) {
+                    mPersenters.addTag(strTags[1]);
+                    transaction.add(R.id.fragment, new MyTextViewFragment(), strTags[1]).addToBackStack(null).commit();
+                }
                 break;
             case R.id.my_anim:
                 mPersenters.showNewFragment(getFragmentManager(), strTags[1]);
-
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -106,6 +107,15 @@ public class MainActivity extends BaseActivity {
 
         final DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPersenters.showTime();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -159,6 +169,7 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         //清除tag
         mPersenters.clearTag();
+        mPersenters.destoryService(this);
     }
 
     @Override

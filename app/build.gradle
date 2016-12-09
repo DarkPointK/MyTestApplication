@@ -11,6 +11,11 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+//        ndk {
+//            moduleName "app"
+//            abiFilters "armeabi", "armeabi-v7a", "x86"
+//        }
     }
     buildTypes {
         release {
@@ -18,10 +23,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main {
+        jni.srcDirs = ['src/main/jni', 'src/main/jni/']
+
+//        manifest.srcFile 'src/main/AndroidManifest.xml'
+        java.srcDirs = ['src/main/java', 'src/main/aidl']
+//        resources.srcDirs = ['src/main/java', 'src/main/aidl']
+        aidl.srcDirs = ['src/main/aidl']
+//        res.srcDirs = ['src/main/res']
+//        assets.srcDirs = ['src/main/assets']
+    } }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
@@ -31,4 +46,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.dagger:dagger:2.6'
     apt 'com.google.dagger:dagger-compiler:2.6'
+    compile 'com.jakewharton:butterknife:8.4.0'
 }

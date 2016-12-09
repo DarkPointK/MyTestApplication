@@ -3,5 +3,11 @@
     <string name="action_settings">Settings</string>
     <string name="my_textview">自定义TextView</string>
     <string name="my_anim">自定义小球动画</string>
+    <string name="recycle">滚动列表</string>
     <string name="ok">确  定</string>
+    <string-array name="options_item">
+        <item>MainActivityFragment</item>
+        <item>MyTextViewFragment</item>
+        <item>RecycleFragment</item>
+    </string-array>
 </resources>

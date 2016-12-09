@@ -32,7 +32,6 @@ public class MyAnimView extends View {
     float scan=1;
     @Inject
     Point currentPoint;
-
     @Inject
     Point startPoint;
     private Paint mPaint;
@@ -90,7 +89,7 @@ public class MyAnimView extends View {
     private void drawCircle(Canvas canvas) {
         float x = currentPoint.getX();
         float y = currentPoint.getY();
-        Log.d("MainActivity", "RADIUS*scan:" + RADIUS*scan);
+//        Log.d("MainActivity", "RADIUS*scan:" + RADIUS*scan);
         canvas.drawCircle(x, y, RADIUS*scan, mPaint);
     }
 

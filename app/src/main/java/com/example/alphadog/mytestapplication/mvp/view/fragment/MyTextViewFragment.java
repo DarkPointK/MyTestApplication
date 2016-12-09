@@ -25,7 +25,7 @@ public class MyTextViewFragment extends Fragment {
     private int maxProgress;
     private boolean turnRun = true;
     private Thread thread;
-    private Float radiuo=1f;
+    private Float radiuo = 1f;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class MyTextViewFragment extends Fragment {
         mMyTextView = (MyTextView) mView.findViewById(R.id.my_textview);
         okBtn = (Button) mView.findViewById(R.id.ok_btn);
         inputEt = (EditText) mView.findViewById(R.id.input_et);
-
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,9 +50,9 @@ public class MyTextViewFragment extends Fragment {
                     thread.interrupt();
                     turnRun = true;
                     maxProgress = Integer.valueOf(inputEt.getText().toString());
-                    progress=0;
-                    InputMethodManager imm =  (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(imm != null) {
+                    progress = 0;
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
                         imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(),
                                 0);
                     }
@@ -77,7 +76,7 @@ public class MyTextViewFragment extends Fragment {
                                 break;
                             }
                             progress++;
-                            radiuo=(float)progress/maxProgress;
+                            radiuo = (float) progress / maxProgress;
                             mMyTextView.setText(progress + "");
                             mMyTextView.setProgress(progress);
                             mMyTextView.setRadiuo(radiuo);
@@ -93,7 +92,7 @@ public class MyTextViewFragment extends Fragment {
                                 break;
                             }
                             progress--;
-                            radiuo=(float)progress/maxProgress;
+                            radiuo = (float) progress / maxProgress;
                             mMyTextView.setText(progress + "");
                             mMyTextView.setProgress(progress);
                             mMyTextView.setRadiuo(radiuo);

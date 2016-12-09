@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="@string/my_anim"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/recycle"
+        android:orderInCategory="100"
+        android:title="@string/recycle"
+        app:showAsAction="never"/>
 </menu>

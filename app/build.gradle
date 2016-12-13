@@ -12,10 +12,10 @@ android {
         versionCode 1
         versionName "1.0"
 
-//        ndk {
-//            moduleName "app"
-//            abiFilters "armeabi", "armeabi-v7a", "x86"
-//        }
+        ndk {
+            moduleName "hello_jni"
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
     }
     buildTypes {
         release {
@@ -25,7 +25,7 @@ android {
     }
     sourceSets { main {
         jni.srcDirs = ['src/main/jni', 'src/main/jni/']
-
+//        jni.srcDirs = ['src/main/jni', 'src/main/jni/']
 //        manifest.srcFile 'src/main/AndroidManifest.xml'
         java.srcDirs = ['src/main/java', 'src/main/aidl']
 //        resources.srcDirs = ['src/main/java', 'src/main/aidl']

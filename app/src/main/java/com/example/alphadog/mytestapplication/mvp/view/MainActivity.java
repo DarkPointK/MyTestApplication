@@ -17,7 +17,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.alphadog.mytestapplication.R;
+import com.example.alphadog.mytestapplication.jni.HelloJni;
 import com.example.alphadog.mytestapplication.mvp.persenters.MainPersenters;
+import com.example.alphadog.mytestapplication.mvp.view.fragment.MainActivityFragment;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.MyTextViewFragment;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.RecycleFragment;
 
@@ -41,6 +43,12 @@ public class MainActivity extends BaseActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mNavigationView = (NavigationView) findViewById(R.id.nv);
         mPersenters = new MainPersenters(this);
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
+
+//        JNI调试
+        Toast.makeText(this, "" + HelloJni.helloJni() + HelloJni.addJni( 1, 2), Toast.LENGTH_SHORT).show();
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -80,22 +88,25 @@ public class MainActivity extends BaseActivity {
         int id = item.getItemId();
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
         switch (id) {
             case R.id.recycle:
-                Toast.makeText(this, "正在开发，敬请期待", Toast.LENGTH_SHORT).show();
-                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
-                    mPersenters.addTag(strTags[2]);
-                    transaction.add(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
-                }
+//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
+//                    mPersenters.addTag(strTags[2]);
+                    transaction.replace(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
+//                }
                 break;
             case R.id.my_textview:
-                if (mPersenters.showNewFragment(getFragmentManager(), strTags[1])) {
-                    mPersenters.addTag(strTags[1]);
-                    transaction.add(R.id.fragment, new MyTextViewFragment(), strTags[1]).addToBackStack(null).commit();
-                }
+//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[1])) {
+//                    mPersenters.addTag(strTags[1]);
+                    transaction.replace(R.id.fragment, new MyTextViewFragment(), strTags[1]).addToBackStack(null).commit();
+//                }
                 break;
             case R.id.my_anim:
-                mPersenters.showNewFragment(getFragmentManager(), strTags[1]);
+//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[0])) {
+//                    mPersenters.addTag(strTags[0]);
+                    transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
+//                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);

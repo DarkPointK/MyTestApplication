@@ -28,10 +28,8 @@ public class AppLifeTimeService extends Service {
     private Messenger mServiceMessage = new Messenger(new ServiceHandler());
     private Messenger mReplyMessnger;
     private long time;
-    private Thread thread;
     public static final int GET_TIME = 1;
     private IBinder mIBinder;
-    private Fruit mFruit;
     private MyFruitImp mMyFruitImp;
     private long oldTime, nowTime;
 
@@ -53,7 +51,8 @@ public class AppLifeTimeService extends Service {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case GET_TIME:
+                 case GET_TIME:
+
                     nowTime = System.currentTimeMillis();
 //                    算出时间间隔
                     time = (nowTime - oldTime) / 1000;

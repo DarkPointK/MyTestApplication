@@ -46,7 +46,7 @@ public class MyTextViewFragment extends Fragment {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.valueOf(inputEt.getText().toString()) != null && Integer.valueOf(inputEt.getText().toString()) > 0 && Integer.valueOf(inputEt.getText().toString()) <= 360) {
+                if (!inputEt.getText().toString().equals("")&&Integer.valueOf(inputEt.getText().toString()) != null && Integer.valueOf(inputEt.getText().toString()) > 0 && Integer.valueOf(inputEt.getText().toString()) <= 360) {
                     thread.interrupt();
                     turnRun = true;
                     maxProgress = Integer.valueOf(inputEt.getText().toString());
@@ -108,6 +108,7 @@ public class MyTextViewFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(thread!=null&&!thread.isInterrupted())
         thread.interrupt();
     }
 }

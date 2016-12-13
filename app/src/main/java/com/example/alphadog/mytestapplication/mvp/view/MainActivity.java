@@ -2,6 +2,7 @@ package com.example.alphadog.mytestapplication.mvp.view;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -48,14 +49,17 @@ public class MainActivity extends BaseActivity {
         transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
 
 //        JNI调试
-        Toast.makeText(this, "" + HelloJni.helloJni() + HelloJni.addJni( 1, 2), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + HelloJni.helloJni() + HelloJni.addJni(1, 2), Toast.LENGTH_SHORT).show();
 
+//        在setSupportActionBar前setTitle
+        if (toolbar != null) {
+            toolbar.setTitle(strTags[0]);
+        }
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, 0, 0) {
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -77,6 +81,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -89,27 +98,34 @@ public class MainActivity extends BaseActivity {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
+        String title;
         switch (id) {
             case R.id.recycle:
 //                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
 //                    mPersenters.addTag(strTags[2]);
-                    transaction.replace(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
+                title = strTags[2];
+                transaction.replace(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
 //                }
                 break;
             case R.id.my_textview:
 //                if (mPersenters.showNewFragment(getFragmentManager(), strTags[1])) {
 //                    mPersenters.addTag(strTags[1]);
-                    transaction.replace(R.id.fragment, new MyTextViewFragment(), strTags[1]).addToBackStack(null).commit();
+                title = strTags[1];
+                transaction.replace(R.id.fragment, new MyTextViewFragment(), strTags[1]).addToBackStack(null).commit();
 //                }
                 break;
             case R.id.my_anim:
 //                if (mPersenters.showNewFragment(getFragmentManager(), strTags[0])) {
 //                    mPersenters.addTag(strTags[0]);
-                    transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
+                title = strTags[0];
+                transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
 //                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+        if (toolbar != null) {
+            toolbar.setTitle(title);
         }
         return true;
     }

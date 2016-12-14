@@ -1,13 +1,18 @@
 package com.example.alphadog.mytestapplication.mvp.view;
 
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -27,6 +32,7 @@ import com.example.alphadog.mytestapplication.mvp.view.fragment.RecycleFragment;
 public class MainActivity extends BaseActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
+    private MenuItem searchItem;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -89,36 +95,71 @@ public class MainActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchItem = menu.findItem(R.id.action_search);
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        ComponentName componentName = getComponentName();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return true;
+            }
+        });
+        MenuItemCompat.setOnActionExpandListener(searchItem, mPersenters);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+//        收起搜索框
+        toolbar.collapseActionView();
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
         String title;
         switch (id) {
-            case R.id.recycle:
-//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
-//                    mPersenters.addTag(strTags[2]);
-                title = strTags[2];
-                transaction.replace(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
+            case R.id.my_anim:
+//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[0])) {
+//                    mPersenters.addTag(strTags[0]);
+                searchItem.setVisible(false);
+                title = strTags[0];
+                transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
 //                }
                 break;
             case R.id.my_textview:
 //                if (mPersenters.showNewFragment(getFragmentManager(), strTags[1])) {
 //                    mPersenters.addTag(strTags[1]);
+                searchItem.setVisible(false);
                 title = strTags[1];
                 transaction.replace(R.id.fragment, new MyTextViewFragment(), strTags[1]).addToBackStack(null).commit();
 //                }
                 break;
-            case R.id.my_anim:
-//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[0])) {
-//                    mPersenters.addTag(strTags[0]);
-                title = strTags[0];
-                transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
+            case R.id.recycle:
+//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
+//                    mPersenters.addTag(strTags[2]);
+                searchItem.setVisible(true);
+                title = strTags[2];
+                transaction.replace(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
+//                }
+                break;
+            case R.id.heart:
+//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
+//                    mPersenters.addTag(strTags[2]);
+                searchItem.setVisible(true);
+                title = strTags[2];
+                MainActivityFragment fragment=new MainActivityFragment();
+                Bundle b=new Bundle();
+                b.putString("type","heart");
+                fragment.setArguments(b);
+                transaction.replace(R.id.fragment, fragment, strTags[2]).addToBackStack(null).commit();
 //                }
                 break;
             default:

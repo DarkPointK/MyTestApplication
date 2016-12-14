@@ -12,7 +12,9 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -31,7 +33,7 @@ import static android.util.Log.d;
  * Created by Alpha Dog on 2016/12/1.
  */
 
-public class MainPersenters implements MainPersentersInterface {
+public class MainPersenters implements MainPersentersInterface ,MenuItemCompat.OnActionExpandListener {
     public static final int EAT = 1;
     private List<String> tags;
     private float oldX, oldY;
@@ -55,6 +57,18 @@ public class MainPersenters implements MainPersentersInterface {
         tags = new ArrayList<>();
 
         mMainActivity.bindService(appLifeTimeService, mServiceConn, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+//        搜索框打开
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+//        搜索框关闭
+        return true;
     }
 
     private class ReplyHolder extends Handler {

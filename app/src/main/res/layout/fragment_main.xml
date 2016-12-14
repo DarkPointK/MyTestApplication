@@ -2,12 +2,17 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#94a6ff"
                 tools:context=".mvp.view.fragment.MainActivityFragment"
                 tools:showIn="@layout/activity_main">
 
     <com.example.alphadog.mytestapplication.ui.MyAnimView
         android:id="@+id/MyAnimView"
-        android:background="#94a6ff"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+<com.example.alphadog.mytestapplication.ui.MyHeartView
+    android:id="@+id/heart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"/>
 </RelativeLayout>

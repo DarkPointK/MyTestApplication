@@ -6,6 +6,7 @@
         android:id="@+id/action_search"
         android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
         android:title="@string/action_search"
+        android:visible="false"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView"/>
 
@@ -19,17 +20,20 @@
             <!--app:showAsAction="never"放置item于ActionBar上的方式-->
             <!--android:orderInCategory="100"优先级-->
             <item
-                android:id="@+id/my_textview"
-                android:title="@string/my_textview"
-
-                />
-            <item
                 android:id="@+id/my_anim"
                 android:title="@string/my_anim"
                 />
             <item
+                android:id="@+id/my_textview"
+                android:title="@string/my_textview"
+                />
+            <item
                 android:id="@+id/recycle"
                 android:title="@string/recycle"
+                />
+            <item
+                android:id="@+id/heart"
+                android:title="@string/heart"
                 />
         </menu>
     </item>

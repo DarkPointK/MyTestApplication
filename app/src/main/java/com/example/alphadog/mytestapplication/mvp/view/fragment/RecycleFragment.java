@@ -42,23 +42,23 @@ public class RecycleFragment extends Fragment {
         super.onDestroy();
     }
 
-    void initData(){
-        for(int x=0;x<3;x++)
-            for(int y=0;y<10;y++){
-                RecyclerItem item=new RecyclerItem();
-                item.setTitle(x+"");
-                item.setContent(y+"");
-                item.setAbb(x+"");
+    void initData() {
+        for (int x = 0; x < 3; x++)
+            for (int y = 0; y < 10; y++) {
+                RecyclerItem item = new RecyclerItem();
+                item.setTitle(x + "");
+                item.setContent(y + "");
+                item.setAbb(x + "");
                 mItems.add(item);
             }
     }
 
     void initView() {
-        mRecycle= (RecyclerView) mView.findViewById(R.id.recycle);
-        mRecycleAdapter=new RecycleAdapter(getActivity(),mItems);
+        mRecycle = (RecyclerView) mView.findViewById(R.id.recycle);
+        mRecycleAdapter = new RecycleAdapter(getActivity(), mItems);
         mRecycle.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycle.setAdapter(mRecycleAdapter);
-        mRecycle.addItemDecoration(new TitleDecoration(mItems,getActivity()));
+        mRecycle.addItemDecoration(new TitleDecoration(mItems, getActivity()));
     }
 
 }

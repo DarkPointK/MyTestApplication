@@ -5,8 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -22,15 +22,15 @@ import java.util.List;
 public class TitleDecoration extends RecyclerView.ItemDecoration {
     private List<RecyclerItem> mItems = new ArrayList<>();
     private Paint mPaint;
-    private int mTitleHeight ;
+    private int mTitleHeight;
     private int mTitleTextSize;
 
     public TitleDecoration(List<RecyclerItem> mItems, Context context) {
         this.mItems = mItems;
-        mPaint=new Paint();
+        mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mTitleHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, context.getResources().getDisplayMetrics());
-        mTitleTextSize=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,14,context.getResources().getDisplayMetrics());
+        mTitleTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14, context.getResources().getDisplayMetrics());
         mPaint.setTextSize(mTitleTextSize);
     }
 
@@ -46,7 +46,7 @@ public class TitleDecoration extends RecyclerView.ItemDecoration {
             if (position == 0) {//等于0肯定要有title的
                 outRect.set(0, mTitleHeight, 0, 0);
             } else {//其他的通过判断
-                if (!mItems.get(position).getAbb().equals(mItems.get(position -1).getAbb())) {
+                if (!mItems.get(position).getAbb().equals(mItems.get(position - 1).getAbb())) {
                     outRect.set(0, mTitleHeight, 0, 0);//不为空 且跟前一个tag不一样了，说明是新的分类，也要title
                 } else {
                     outRect.set(0, 0, 0, 0);
@@ -61,36 +61,68 @@ public class TitleDecoration extends RecyclerView.ItemDecoration {
         super.onDraw(c, parent, state);
 
         int left = parent.getPaddingLeft();
-        int right = parent.getRight()-parent.getPaddingRight();
+        int right = parent.getRight() - parent.getPaddingRight();
         for (int i = 0; i < parent.getChildCount(); i++) {
             //i是正显示在屏幕中的子view的序号，完全版的序号需要通过getChildLayoutPosition获取
             int position = parent.getChildLayoutPosition(parent.getChildAt(i));
-            if(mItems!=null&&mItems.size()>0)
-            if (position == 0) {
-                drawTitleRec(c, left, right, parent.findViewHolderForLayoutPosition(position).itemView, position);
-            } else if(position>-1){
-                if (!mItems.get(position).getAbb().equals(mItems.get(position -1).getAbb())) {
-                    drawTitleRec(c, left, right, parent.findViewHolderForLayoutPosition(position).itemView, position);
-                }
-            }
+            if (mItems != null && mItems.size() > 0)
+//                将计算recycleView的paddingTop计算其中，保证标题不绘制超出到padding中
+//                当第一个itemView的高度大于paddingTop时绘制title
+                if (parent.findViewHolderForLayoutPosition(position).itemView.getTop() - mTitleHeight >= parent.getPaddingTop())
+                    if (position == 0) {
+                        drawTitleRec(c, left, right, parent.findViewHolderForLayoutPosition(position).itemView, position);
+                    } else if (position > -1) {
+                        if (!mItems.get(position).getAbb().equals(mItems.get(position - 1).getAbb())) {
+                            drawTitleRec(c, left, right, parent.findViewHolderForLayoutPosition(position).itemView, position);
+                        }
+                    }
         }
     }
 
     //绘制随滑动而滚动的title
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-
         super.onDrawOver(c, parent, state);
+        int firstPos = ((LinearLayoutManager) (parent.getLayoutManager())).findFirstVisibleItemPosition();
+
+        if (mItems == null || mItems.isEmpty() || firstPos > mItems.size())
+            return;
+
+        String tag = mItems.get(firstPos).getAbb();
+        View child = parent.findViewHolderForLayoutPosition(firstPos).itemView;
+
+        boolean flag = false;
+        if (firstPos + 1 < mItems.size())
+            if (!mItems.get(firstPos + 1).getAbb().equals(tag))
+                if (child.getBottom() - parent.getPaddingTop() <= mTitleHeight) {
+                    c.save();
+                    flag = true;
+
+                    c.translate(0, child.getBottom() - mTitleHeight - parent.getPaddingTop());
+
+                }
+        mPaint.setColor(Color.BLUE);
+        c.drawRect(parent.getPaddingLeft(), parent.getPaddingTop(), parent.getRight() - parent.getPaddingRight(), parent.getPaddingTop() + mTitleHeight, mPaint);
+        mPaint.setColor(Color.WHITE);
+        mPaint.getTextBounds(mItems.get(firstPos).getAbb(), 0, mItems.get(firstPos).getAbb().length(), new Rect());
+        c.drawText(mItems.get(firstPos).getAbb(), child.getPaddingLeft() + mTitleHeight, mTitleHeight / 2 - mPaint.getFontMetrics().descent + (mPaint.getFontMetrics().descent -
+                mPaint.getFontMetrics().ascent) / 2 + parent.getPaddingTop(), mPaint);
+
+        if (flag) {
+            c.restore();
+        }
     }
 
     private void drawTitleRec(Canvas c, int left, int right, View child, int pos) {
         mPaint.setColor(Color.BLUE);
-        c.drawRect(left, child.getTop()- mTitleHeight, right, child.getTop(),mPaint);
+        c.drawRect(left, child.getTop() - mTitleHeight, right, child.getTop(), mPaint);
 
-        Log.d("TitleDecoration", child.getTop() + " " + (child.getTop()+ mTitleHeight)+" "+pos);
+//        Log.d("TitleDecoration", child.getTop() + " " + (child.getTop() + mTitleHeight) + " " + pos);
 
         mPaint.setColor(Color.WHITE);
         mPaint.getTextBounds(mItems.get(pos).getAbb(), 0, mItems.get(pos).getAbb().length(), new Rect());
-        c.drawText(mItems.get(pos).getAbb(),mTitleHeight/2, mTitleHeight / 2 - mPaint.getFontMetrics().descent + (mPaint.getFontMetrics().descent - mPaint.getFontMetrics().ascent) / 2+child.getTop()-mTitleHeight, mPaint);
+        c.drawText(mItems.get(pos).getAbb(), child.getPaddingLeft() + mTitleHeight, mTitleHeight / 2 - mPaint.getFontMetrics().descent + (mPaint.getFontMetrics().descent - mPaint
+                .getFontMetrics().ascent) / 2 + child.getTop() - mTitleHeight, mPaint);
+
     }
 }

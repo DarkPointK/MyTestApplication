@@ -10,7 +10,6 @@ import android.graphics.Point;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -80,7 +79,7 @@ public class MyHeartView extends View {
         path.lineTo(p.x, p.y);
         canvas.drawPath(path, paint);
 
-        onDrawNewThread();
+        onDrawNewThread(canvas);
 
     }
 
@@ -89,7 +88,7 @@ public class MyHeartView extends View {
         super.onLayout(changed, left, top, right, bottom);
     }
 
-    private void onDrawNewThread() {
+    private void onDrawNewThread(final Canvas canvas) {
         new Thread() {
             @Override
             public void run() {
@@ -104,8 +103,15 @@ public class MyHeartView extends View {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Log.d("MyHeartView", "angle:" + angle);
                     if (angle >= 29) {
+                        Path path = new Path();
+                        paint.setStyle(Paint.Style.FILL);
+                        Point d = getHeartPoint(angle);
+                            path.moveTo(d.x, d.y);
+                        for(int a=0;a<30;a++) {
+                            path.lineTo(d.x, d.y);
+                            canvas.drawPath(path, paint);
+                        }
                         mHandler.sendMessage(Message.obtain(null,1));
                     }
                 }
@@ -119,7 +125,6 @@ public class MyHeartView extends View {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    Log.d("MyHeartView", "123");
                     ObjectAnimator.ofFloat(MyHeartView.this, "scaleX", 1, 1.5f).setDuration(1000).start();
                     ObjectAnimator.ofFloat(MyHeartView.this, "scaleY", 1, 1.5f).setDuration(1000).start();
 

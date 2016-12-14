@@ -153,8 +153,8 @@ public class MainActivity extends BaseActivity {
             case R.id.heart:
 //                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
 //                    mPersenters.addTag(strTags[2]);
-                searchItem.setVisible(true);
-                title = strTags[2];
+                searchItem.setVisible(false);
+                title = strTags[3];
                 MainActivityFragment fragment=new MainActivityFragment();
                 Bundle b=new Bundle();
                 b.putString("type","heart");

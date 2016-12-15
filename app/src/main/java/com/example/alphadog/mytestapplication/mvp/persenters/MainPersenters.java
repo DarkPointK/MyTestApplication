@@ -12,14 +12,15 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.alphadog.mytestapplication.IFruitAidlInterface;
+import com.example.alphadog.mytestapplication.R;
 import com.example.alphadog.mytestapplication.mvp.view.MainActivity;
 import com.example.alphadog.mytestapplication.service.AppLifeTimeService;
 import com.nineoldandroids.view.ViewHelper;
@@ -33,7 +34,7 @@ import static android.util.Log.d;
  * Created by Alpha Dog on 2016/12/1.
  */
 
-public class MainPersenters implements MainPersentersInterface ,MenuItemCompat.OnActionExpandListener {
+public class MainPersenters implements MainPersentersInterface, MenuItemCompat.OnActionExpandListener {
     public static final int EAT = 1;
     private List<String> tags;
     private float oldX, oldY;
@@ -103,8 +104,10 @@ public class MainPersenters implements MainPersentersInterface ,MenuItemCompat.O
                 try {
                     String s = mFruitAidlInterface.getSomeThing();
                     String s1 = mFruitAidlInterface.getFruit().toString();
-                    Toast.makeText(mMainActivity, s + s1, Toast.LENGTH_SHORT).show();
-
+//                    Toast.makeText(mMainActivity, s + s1, Toast.LENGTH_SHORT).show();
+                    if (mMainActivity.findViewById(R.id.fab) != null)
+                        Snackbar.make(mMainActivity.findViewById(R.id.fab), s + s1, Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                     d("ServiceHandler", "处理水果 " + s + s1);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -189,10 +192,10 @@ public class MainPersenters implements MainPersentersInterface ,MenuItemCompat.O
 
     public void showTime() {
         try {
-                Message mess = Message.obtain(null, AppLifeTimeService.GET_TIME);
-                mess.replyTo = replyMess;
+            Message mess = Message.obtain(null, AppLifeTimeService.GET_TIME);
+            mess.replyTo = replyMess;
 //            向服务发送信息并定义一个待回应的Messenger
-                message.send(mess);
+            message.send(mess);
 
         } catch (RemoteException e) {
             e.printStackTrace();

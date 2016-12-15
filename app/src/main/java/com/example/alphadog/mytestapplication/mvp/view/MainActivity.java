@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +24,7 @@ import android.widget.Toast;
 import com.example.alphadog.mytestapplication.R;
 import com.example.alphadog.mytestapplication.jni.HelloJni;
 import com.example.alphadog.mytestapplication.mvp.persenters.MainPersenters;
+import com.example.alphadog.mytestapplication.mvp.view.fragment.DataBaseContortFragment;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.MainActivityFragment;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.MyTextViewFragment;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.RecycleFragment;
@@ -33,6 +33,7 @@ public class MainActivity extends BaseActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private MenuItem searchItem;
+    private boolean search = false;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity {
         mPersenters = new MainPersenters(this);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
+        transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[3]).addToBackStack(null).commit();
 
 //        JNI调试
         Toast.makeText(this, "" + HelloJni.helloJni() + HelloJni.addJni(1, 2), Toast.LENGTH_SHORT).show();
@@ -99,6 +100,7 @@ public class MainActivity extends BaseActivity {
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchItem = menu.findItem(R.id.action_search);
 
+        searchItem.setVisible(search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         ComponentName componentName = getComponentName();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
@@ -129,38 +131,40 @@ public class MainActivity extends BaseActivity {
             case R.id.my_anim:
 //                if (mPersenters.showNewFragment(getFragmentManager(), strTags[0])) {
 //                    mPersenters.addTag(strTags[0]);
+                search = false;
                 searchItem.setVisible(false);
                 title = strTags[0];
-                transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[0]).addToBackStack(null).commit();
+                MainActivityFragment fragment = new MainActivityFragment();
+                Bundle b = new Bundle();
+                b.putString("type", "ball");
+                fragment.setArguments(b);
+                transaction.replace(R.id.fragment, fragment, strTags[0]).addToBackStack(null).commit();
 //                }
                 break;
             case R.id.my_textview:
-//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[1])) {
-//                    mPersenters.addTag(strTags[1]);
+                search = false;
                 searchItem.setVisible(false);
                 title = strTags[1];
                 transaction.replace(R.id.fragment, new MyTextViewFragment(), strTags[1]).addToBackStack(null).commit();
-//                }
                 break;
             case R.id.recycle:
-//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
-//                    mPersenters.addTag(strTags[2]);
+                search = true;
                 searchItem.setVisible(true);
                 title = strTags[2];
                 transaction.replace(R.id.fragment, new RecycleFragment(), strTags[2]).addToBackStack(null).commit();
-//                }
                 break;
             case R.id.heart:
-//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[2])) {
-//                    mPersenters.addTag(strTags[2]);
+                search = false;
                 searchItem.setVisible(false);
                 title = strTags[3];
-                MainActivityFragment fragment=new MainActivityFragment();
-                Bundle b=new Bundle();
-                b.putString("type","heart");
-                fragment.setArguments(b);
-                transaction.replace(R.id.fragment, fragment, strTags[2]).addToBackStack(null).commit();
-//                }
+
+                transaction.replace(R.id.fragment, new MainActivityFragment(), strTags[2]).addToBackStack(null).commit();
+                break;
+            case R.id.database:
+                search = false;
+                searchItem.setVisible(false);
+                title = strTags[4];
+                transaction.replace(R.id.fragment, new DataBaseContortFragment(), strTags[4]).addToBackStack(null).commit();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -180,8 +184,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 mPersenters.showTime();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 

@@ -51,7 +51,7 @@ public class AppLifeTimeService extends Service {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                 case GET_TIME:
+                case GET_TIME:
 
                     nowTime = System.currentTimeMillis();
 //                    算出时间间隔
@@ -72,7 +72,6 @@ public class AppLifeTimeService extends Service {
                         }
                         break;
                     }
-
                     Toast.makeText(AppLifeTimeService.this, "程序运行了" + time + "秒", Toast.LENGTH_SHORT).show();
                     break;
                 default:
@@ -111,8 +110,8 @@ public class AppLifeTimeService extends Service {
                 d("ServiceHandler", "送出水果:" + mMyFruitImp.getFruit().toString());
 
 //                通知栏
-                NotificationManager notificationManager= (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                Intent newIntent=new Intent(this, MainActivity.class);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                Intent newIntent = new Intent(this, MainActivity.class);
                 newIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 Notification notification = new Notification.Builder(this)

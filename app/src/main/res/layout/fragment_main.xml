@@ -9,10 +9,10 @@
     <com.example.alphadog.mytestapplication.ui.MyAnimView
         android:id="@+id/MyAnimView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 <com.example.alphadog.mytestapplication.ui.MyHeartView
     android:id="@+id/heart"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="gone"/>
+    android:layout_height="match_parent"/>
 </RelativeLayout>

@@ -7,15 +7,21 @@
     <string name="searchable">searchable</string>
 
     <string name="search">输入搜索…</string>
-    <string name="my_textview">自定义TextView</string>
+    <string name="input_id">输入ID查询:</string>
+    <string name="input_str">添加的内容：</string>
+
     <string name="my_anim">自定义小球动画</string>
+    <string name="my_textview">自定义TextView</string>
     <string name="recycle">滚动列表</string>
     <string name="heart">心</string>
+    <string name="database">数据库操作</string>
+    
     <string name="ok">确  定</string>
     <string-array name="options_item">
         <item>MainActivityFragment</item>
         <item>MyTextViewFragment</item>
         <item>RecycleFragment</item>
         <item>Heart</item>
+        <item>DataBaseFragment</item>
     </string-array>
 </resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+    <TableRow
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/input_id"
+            android:textSize="21sp"/>
+
+        <EditText
+            android:id="@+id/input_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="21sp"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/input_str"
+            android:textSize="21sp"/>
+
+        <EditText
+            android:id="@+id/input_str"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="21sp"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <Button
+            android:id="@+id/insert"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="?attr/buttonStyle"
+            android:layout_weight="1"
+            android:text="insert"
+            android:textSize="21sp"/>
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="?attr/buttonStyle"
+            android:layout_weight="1"
+            android:text="delete"
+            android:textSize="21sp"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <Button
+            android:id="@+id/updata"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="?attr/buttonStyle"
+            android:layout_weight="1"
+            android:text="updata"
+            android:textSize="21sp"/>
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="?attr/buttonStyle"
+            android:layout_weight="1"
+            android:text="search"
+            android:textSize="21sp"/>
+    </TableRow>
+</GridLayout>

@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
 
 //        在setSupportActionBar前setTitle
         if (toolbar != null) {
-            toolbar.setTitle(strTags[0]);
+            toolbar.setTitle(strTags[3]);
         }
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

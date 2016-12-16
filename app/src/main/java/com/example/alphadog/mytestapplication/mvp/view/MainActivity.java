@@ -126,6 +126,7 @@ public class MainActivity extends BaseActivity {
         toolbar.collapseActionView();
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.animator.fragment_enter,R.animator.fragment_exit);
         String title;
         switch (id) {
             case R.id.my_anim:
@@ -184,7 +185,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 mPersenters.showTime();
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//                Snackbar.make(view,"Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -195,14 +196,13 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        if (toolbar != null) {
+        if (toolbar != null)
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openOrCloseDrawer();
                 }
             });
-        }
     }
 
     @Override

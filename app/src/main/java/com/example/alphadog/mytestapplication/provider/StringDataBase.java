@@ -12,12 +12,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class StringDataBase extends SQLiteOpenHelper {
-    static final String STRING_DATABASE_NAME = "stringDataBase";
-    static final String TABLE_NAME = "one";
-    static final String KEY_NAME = "str";
-
-    static final String CREAT_TABLE = "CREAT TABLE IF NOT EXISTS " + TABLE_NAME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + "TEXT)";
-    static final String DROP_TABLE = "DROP TABLE IS EXISTS" + TABLE_NAME;
+    private static final String STRING_DATABASE_NAME = "stringDataBase";
+    private static final String TABLE_NAME = "one";
+    private static final String KEY_NAME = "str";
+    private static final String CONTENT = "content";
+    private static final String CREAT_TABLE = "CREAT TABLE IF NOT EXISTS " + TABLE_NAME + "(_id INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + "INTEGER," + CONTENT + "INTEGER)";
+    private static final String DROP_TABLE = "DROP TABLE IS EXISTS" + TABLE_NAME;
 
     public StringDataBase(Context context, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, STRING_DATABASE_NAME, factory, version);

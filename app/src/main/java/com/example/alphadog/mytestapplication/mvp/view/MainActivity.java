@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity {
         toolbar.collapseActionView();
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.fragment_enter,R.animator.fragment_exit);
+        transaction.setCustomAnimations(R.animator.fragment_enter, R.animator.fragment_exit);
         String title;
         switch (id) {
             case R.id.my_anim:
@@ -170,9 +170,9 @@ public class MainActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-        if (toolbar != null) {
+        if (toolbar != null)
             toolbar.setTitle(title);
-        }
+
         return true;
     }
 

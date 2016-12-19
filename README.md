@@ -1,5 +1,5 @@
 # MyTestApplication
-![](file:///C:/Users/Alpha%20Dog/Desktop/IMG_0101.JPG)
+[img](https://github.com/DarkPointK/MyTestApplication/img/IMG_0101.JPG)
 &ensp;&ensp;发布在学习的一些技术尝试，相关博客请移步 http://www.cnblogs.com/AlphaDog/<br/>
 > 目前demo中包括:<br/>
 * 1.fragment的使用；

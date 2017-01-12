@@ -4,7 +4,7 @@
 > 目前demo中包括:<br/>
 * 1.MVP模式；
 * 2.fragment的使用；
-* 3.degger2；
+* 3.dagger2；
 * 4.service组件的远程来往通信AIDL；
 * 5.JNI；
 * 6.Recycle的类似通讯录带可滚动的标题栏；

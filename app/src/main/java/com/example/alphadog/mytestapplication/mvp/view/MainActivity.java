@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
@@ -28,6 +29,7 @@ import com.example.alphadog.mytestapplication.mvp.view.fragment.DataBaseContortF
 import com.example.alphadog.mytestapplication.mvp.view.fragment.MainActivityFragment;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.MyTextViewFragment;
 import com.example.alphadog.mytestapplication.mvp.view.fragment.RecycleFragment;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
 
 public class MainActivity extends BaseActivity {
     private FloatingActionButton fab;
@@ -88,6 +90,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mPersenters.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
     }
@@ -115,6 +122,7 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
+
         MenuItemCompat.setOnActionExpandListener(searchItem, mPersenters);
         return super.onCreateOptionsMenu(menu);
     }
@@ -130,8 +138,6 @@ public class MainActivity extends BaseActivity {
         String title;
         switch (id) {
             case R.id.my_anim:
-//                if (mPersenters.showNewFragment(getFragmentManager(), strTags[0])) {
-//                    mPersenters.addTag(strTags[0]);
                 search = false;
                 searchItem.setVisible(false);
                 title = strTags[0];
@@ -140,7 +146,6 @@ public class MainActivity extends BaseActivity {
                 b.putString("type", "ball");
                 fragment.setArguments(b);
                 transaction.replace(R.id.fragment, fragment, strTags[0]).addToBackStack(null).commit();
-//                }
                 break;
             case R.id.my_textview:
                 search = false;
@@ -185,7 +190,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 mPersenters.showTime();
-//                Snackbar.make(view,"Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -224,16 +230,6 @@ public class MainActivity extends BaseActivity {
         getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
         return typedValue.data;
     }
-
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
-
 
     @Override
     protected void onDestroy() {

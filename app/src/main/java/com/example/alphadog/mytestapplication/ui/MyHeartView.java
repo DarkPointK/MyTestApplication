@@ -1,6 +1,5 @@
 package com.example.alphadog.mytestapplication.ui;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +10,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.nineoldandroids.animation.ObjectAnimator;
 
 /**
  * Created by Alpha Dog on 2016/10/10.
@@ -23,6 +24,19 @@ public class MyHeartView extends View {
     private boolean isDrawing = false;
     private float angle = 10L;
     private Path path;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    ObjectAnimator.ofFloat(MyHeartView.this, "scaleX", 1, 1.5f).setDuration(1000).start();
+                    ObjectAnimator.ofFloat(MyHeartView.this, "scaleY", 1, 1.5f).setDuration(1000).start();
+
+                    ObjectAnimator.ofFloat(MyHeartView.this, "alpha", 1, 0f).setDuration(1000).start();
+                    break;
+            }
+        }
+    };
 
     public MyHeartView(Context context) {
         this(context, null);
@@ -89,7 +103,8 @@ public class MyHeartView extends View {
     }
 
     private void onDrawNewThread(final Canvas canvas) {
-        new Thread() {
+
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 if (isDrawing) return;
@@ -107,30 +122,17 @@ public class MyHeartView extends View {
                         Path path = new Path();
                         paint.setStyle(Paint.Style.FILL);
                         Point d = getHeartPoint(angle);
-                            path.moveTo(d.x, d.y);
-                        for(int a=0;a<30;a++) {
+                        path.moveTo(d.x, d.y);
+                        for (int a = 0; a < 30; a++) {
                             path.lineTo(d.x, d.y);
-                            canvas.drawPath(path, paint);
+//                            canvas.drawPath(path, paint);
                         }
-                        mHandler.sendMessage(Message.obtain(null,1));
+                        mHandler.sendMessage(Message.obtain(null, 1));
                     }
                 }
             }
-        }.start();
+        };
+        thread.start();
 
     }
-
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    ObjectAnimator.ofFloat(MyHeartView.this, "scaleX", 1, 1.5f).setDuration(1000).start();
-                    ObjectAnimator.ofFloat(MyHeartView.this, "scaleY", 1, 1.5f).setDuration(1000).start();
-
-                    ObjectAnimator.ofFloat(MyHeartView.this, "alpha", 1, 0f).setDuration(1000).start();
-                    break;
-            }
-        }
-    };
 }

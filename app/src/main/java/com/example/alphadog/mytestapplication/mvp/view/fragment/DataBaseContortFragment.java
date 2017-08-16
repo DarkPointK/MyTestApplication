@@ -2,11 +2,13 @@ package com.example.alphadog.mytestapplication.mvp.view.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.alphadog.mytestapplication.R;
 
@@ -39,7 +41,6 @@ public class DataBaseContortFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_databasecontort, container, false);
-
         ButterKnife.bind(this, mView);
         return mView;
     }
@@ -51,15 +52,13 @@ public class DataBaseContortFragment extends Fragment {
 
     @OnClick({R.id.insert, R.id.delete, R.id.updata, R.id.search})
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.insert:
-                break;
-            case R.id.delete:
-                break;
-            case R.id.updata:
-                break;
-            case R.id.search:
-                break;
+        int i = view.getId();
+        if (i == R.id.insert) {
+            Toast.makeText(getActivity(), "增加", Toast.LENGTH_SHORT).show();
+            Log.d("DataBaseContortFragment", "增加");
+        } else if (i == R.id.delete) {
+        } else if (i == R.id.updata) {
+        } else if (i == R.id.search) {
         }
     }
 }

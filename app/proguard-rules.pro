@@ -20,6 +20,15 @@
 -dontskipnonpubliclibraryclasses
 -verbose
 -dontpreverify
+-dontobfuscate
+-forceprocessing
+-optimizationpasses 5
+
+-keep class * extends android.app.Activity
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+}
 
 -dontwarn com.squareup.picasso.**
 -dontwarn com.android.support.**
@@ -102,3 +111,35 @@
 
 #------------LIBS--------------------
 -keep class android.support.** { public *; }
+
+#Butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+###排除所有注解类
+-keep class * extends java.lang.annotation.Annotation { *; }
+-keep interface * extends java.lang.annotation.Annotation { *; }
+
+
+#greendao3.2.0,此是针对3.2.0，如果是之前的，可能需要更换下包名
+-keep class org.greenrobot.greendao.**{*;}
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+#If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+
+
+#If you do not use RxJava:
+-dontwarn rx.**

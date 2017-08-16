@@ -6,3 +6,17 @@
 .DS_Store
 /build
 /captures
+/gradle.properties
+.idea/sonarlint/issuestore/0/
+.idea/sonarlint/issuestore/2/
+.idea/sonarlint/issuestore/5/
+.idea/sonarlint/issuestore/6/
+.idea/sonarlint/issuestore/7/
+.idea/sonarlint/issuestore/8/
+.idea/sonarlint/issuestore/c/
+.idea/sonarlint/issuestore/d/
+.idea/sonarlint/issuestore/e/
+.idea/sonarlint/issuestore/f/8/
+app/MyTestApplication.jks
+app/src/test/
+projectFilesBackup/

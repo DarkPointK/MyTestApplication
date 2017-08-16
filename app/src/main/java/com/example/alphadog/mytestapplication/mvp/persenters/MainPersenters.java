@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -18,12 +19,14 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.alphadog.mytestapplication.IFruitAidlInterface;
 import com.example.alphadog.mytestapplication.R;
 import com.example.alphadog.mytestapplication.mvp.view.MainActivity;
 import com.example.alphadog.mytestapplication.service.AppLifeTimeService;
 import com.nineoldandroids.view.ViewHelper;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +46,7 @@ public class MainPersenters implements MainPersentersInterface, MenuItemCompat.O
     private AppLifeTimeServiceConnection mServiceConn = new AppLifeTimeServiceConnection();
     private Messenger message;
     private Messenger replyMess = new Messenger(new ReplyHolder());
-    private boolean eat = false;
+    private boolean eatB = false;
     private IFruitAidlInterface mFruitAidlInterface;
     private MainActivity mMainActivity;
     private long time;
@@ -81,7 +84,7 @@ public class MainPersenters implements MainPersentersInterface, MenuItemCompat.O
                     time = (long) msg.obj;
                     d("ServiceHandler", "time2:" + time);
 
-                    eat = true;
+                    eatB = true;
 //                    打包上次的时间间隔并传递intent重绑服务
                     appLifeTimeService.putExtra("time", time);
                     d("ServiceHandler", "接收到返回信息");
@@ -95,7 +98,7 @@ public class MainPersenters implements MainPersentersInterface, MenuItemCompat.O
     private class AppLifeTimeServiceConnection implements ServiceConnection {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            if (!eat) {
+            if (!eatB) {
                 d("ServiceHandler", "处理信息");
                 message = new Messenger(service);
             } else {
@@ -205,5 +208,22 @@ public class MainPersenters implements MainPersentersInterface, MenuItemCompat.O
     public void destoryService(MainActivity mainActivity) {
         mainActivity.unbindService(mServiceConn);
         mainActivity.stopService(appLifeTimeService);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == 1) {
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Toast.makeText(mMainActivity, "解析结果:" + result, Toast.LENGTH_LONG).show();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(mMainActivity, "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 }

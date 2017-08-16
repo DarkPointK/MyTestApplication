@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+import static java.lang.System.exit;
 
 /**
  * Created by Alpha Dog on 2016/12/1.
@@ -43,7 +44,7 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
                 mLastClickTime = now;
             } else {
-                System.exit(0);
+                exit(0);
 //                this.finish();
             }
             return true;

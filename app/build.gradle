@@ -1,17 +1,22 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'org.greenrobot.greendao'//GreenDao
+
+greendao {
+    schemaVersion 1
+    //daoPackage 'com.greendao.gen'
+    targetGenDir 'src/main/java'
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.example.alphadog.mytestapplication"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        manifestPlaceholders = [CHANNEL: "dev"]
         ndk {
             moduleName "hello_jni"
             abiFilters "armeabi", "armeabi-v7a", "x86"
@@ -36,8 +41,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
             multiDexEnabled true
+            minifyEnabled true
             zipAlignEnabled true
 //            shrinkResources true
             signingConfig signingConfigs.release
@@ -47,15 +52,15 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     if (output.outputFile != null && output.outputFile.name.endsWith("apk") && "release".equals(variant.buildType.name)) {
-                        def apk = new File(output.outputFile.getParent()+ "/${variant.buildType.name}", "MyTestAplication_${variant.flavorName}_v${variant.versionName}_${getTime()}.apk")
+                        def apk = new File(output.outputFile.getParent() + "/${variant.buildType.name}", "MyTestAplication_${variant.flavorName}_v${variant.versionName}_${getTime()}.apk")
                         output.outputFile = apk
                     }
                 }
             }
         }
         debug {
-            minifyEnabled false
             multiDexEnabled true
+            minifyEnabled false
             zipAlignEnabled true
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -64,24 +69,24 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     if (output.outputFile != null && output.outputFile.name.endsWith("apk") && "debug".equals(variant.buildType.name)) {
-                        def apk = new File(output.outputFile.getParent()+ "/${variant.buildType.name}", "MyTestAplication_${variant.flavorName}_v${variant.versionName}_${getTime()}.apk")
+                        def apk = new File(output.outputFile.getParent() + "/${variant.buildType.name}", "MyTestAplication_${variant.flavorName}_v${variant.versionName}_${getTime()}.apk")
                         output.outputFile = apk
                     }
                 }
-//              插装测试覆盖率代码，覆盖率框架我选择的是emma，并且不可混淆apk代码
-                if ('dev'.equals(variant.flavorName)) {
-                    variant.javaCompile.doLast {
-                        def coverageFile = file('out/coverage,em')
-                        if (coverageFile.exists())
-                            coverageFile.delete()
-//                        使用javaexec命令执行java应用程序进程插装，插装模式使用的是overwrite，就是插装后覆盖源文件
-                        javaexec {
-                            main 'emma'
-                            args 'instr', '-ip', variant.javaCompile.destinationDir, '-m', 'overwrite', '-out', 'out/coverage.em'
-                            classpath files(new File(getSdkDirectory(), 'tools/lib/emma.jar'))
-                        }
-                    }
-                }
+////              插装测试覆盖率代码，覆盖率框架我选择的是emma，并且不可混淆apk代码
+//                if ('dev'.equals(variant.flavorName)&& "debug".equals(variant.buildType.name)) {
+//                    variant.javaCompile.doLast {
+//                        def coverageFile = file('out/coverage,em')
+//                        if (coverageFile.exists())
+//                            coverageFile.delete()
+////                        使用javaexec命令执行java应用程序进程插装，插装模式使用的是overwrite，就是插装后覆盖源文件
+//                        javaexec {
+//                            main 'emma'
+//                            args 'instr', '-ip', variant.javaCompile.destinationDir, '-m', 'overwrite', '-out', 'out/coverage.em'
+//                            classpath files(new File(getSdkDirectory(), 'tools/lib/emma.jar'))
+//                        }
+//                    }
+//                }
             }
         }
     }
@@ -93,8 +98,8 @@ android {
     }
 
     productFlavors {
-        dev {
-            applicationId "com.example.alphadog.mytestappliction.dev"
+        development {
+            applicationId "com.example.alphadog.mytestappliction.development"
             buildConfigField('String', 'url', '"111111"')
             versionName = '1.0'
         }
@@ -138,15 +143,19 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
-//    插装测试覆盖率代码的依赖
+    //    插装测试覆盖率代码的依赖
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-//    动画框架
+    //    动画框架
     compile 'com.nineoldandroids:library:2.4.0'
-//    网络图片缓存框架
+    //    网络图片缓存框架
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.dagger:dagger:2.6'
     apt 'com.google.dagger:dagger-compiler:2.6'
+    //    依赖插装框架
+    //    devCompile files(new File(android.getSdkDirectory(), 'tools/lib/emma_device.jar'))
+    //    二维码扫描
     compile 'com.jakewharton:butterknife:8.4.0'
-
-    devCompile files(new File(android.getSdkDirectory(), 'tools/lib/emma_device.jar'))
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'cn.yipianfengye.android:zxing-library:2.1'
+    compile 'org.greenrobot:greendao:3.2.0'
 }

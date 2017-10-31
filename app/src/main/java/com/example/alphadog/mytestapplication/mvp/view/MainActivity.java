@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.animator.fragment_enter, R.animator.fragment_exit);
-        String title;
+        String title="";
         switch (id) {
             case R.id.my_anim:
                 search = false;
@@ -171,6 +171,9 @@ public class MainActivity extends BaseActivity {
                 searchItem.setVisible(false);
                 title = strTags[4];
                 transaction.replace(R.id.fragment, new DataBaseContortFragment(), strTags[4]).addToBackStack(null).commit();
+                break;
+            case R.id.coordinator:
+                startActivity(new Intent(this,ScrollingActivity.class));
                 break;
             default:
                 return super.onOptionsItemSelected(item);

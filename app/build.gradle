@@ -158,4 +158,8 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'cn.yipianfengye.android:zxing-library:2.1'
     compile 'org.greenrobot:greendao:3.2.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'

@@ -33,10 +33,15 @@
             <item
                 android:id="@+id/heart"
                 android:title="@string/heart"
-                /><item
-            android:id="@+id/database"
-            android:title="@string/database"
-            />
+                />
+            <item
+                android:id="@+id/database"
+                android:title="@string/database"
+                />
+            <item
+                android:id="@+id/coordinator"
+                android:title="@string/coordinator"
+                />
         </menu>
     </item>
 </menu>

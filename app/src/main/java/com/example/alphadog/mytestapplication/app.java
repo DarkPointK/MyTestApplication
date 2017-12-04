@@ -1,6 +1,6 @@
 package com.example.alphadog.mytestapplication;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.example.alphadog.mytestapplication.dagger.component.AppComponent;
 import com.example.alphadog.mytestapplication.dagger.component.DaggerAppComponent;
@@ -11,7 +11,7 @@ import com.uuzuche.lib_zxing.activity.ZXingLibrary;
  * Created by Alpha Dog on 2016/11/29.
  */
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     private AppComponent mAppComponent;
 

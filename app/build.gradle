@@ -129,7 +129,7 @@ android {
 
 def getTime() {
     def time = new Date().format('yyyyMMdd-HH')
-    return time;
+    return time
 }
 
 dependencies {

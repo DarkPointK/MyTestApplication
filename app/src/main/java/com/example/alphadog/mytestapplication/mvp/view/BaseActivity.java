@@ -18,6 +18,7 @@ import static java.lang.System.exit;
 
 public class BaseActivity extends AppCompatActivity {
     private long mLastClickTime = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        if (this instanceof MainActivity && keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 
             long now = System.currentTimeMillis();
             if (now - mLastClickTime > 3000) {
@@ -51,7 +52,6 @@ public class BaseActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
 
 }

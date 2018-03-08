@@ -10,3 +10,5 @@ A
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 ?
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
+L
+findbugs-android-exclude.xml,c\a\cacbb76952d949e9e6e9063b5ebd424d7c9664b9

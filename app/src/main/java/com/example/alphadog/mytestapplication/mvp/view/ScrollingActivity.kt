@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.view.View
 import com.example.alphadog.mytestapplication.R
+import com.example.alphadog.mytestapplication.http.APIFactory
 import kotlinx.android.synthetic.main.activity_coordinator.*
 
 class ScrollingActivity : BaseActivity() {
@@ -20,5 +21,6 @@ class ScrollingActivity : BaseActivity() {
                 tvTitle.alpha= Math.abs(verticalOffset)/appbar.totalScrollRange.toFloat()
             }
         }
+        APIFactory.getInstance()
     }
 }
